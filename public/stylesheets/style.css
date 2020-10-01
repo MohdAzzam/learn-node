@@ -1,0 +1,12 @@
+body{
+    background-color: red;
+}
+.price{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.row{
+    padding-top: 25px;
+}

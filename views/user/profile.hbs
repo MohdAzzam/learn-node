@@ -1,0 +1,177 @@
+{{#if messageImageError}}
+    <div class="alert alert-danger">
+        {{messageImageError}}
+    </div>
+{{/if}}
+<input type="hidden" value="{{hasError}}" id="hasError">
+<div class="row">
+    <h1>Welcome {{user.userName}}</h1>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+        <div class="text-center">
+            <img src="{{user.image}}" id="image" alt="..." class="img-thumbnail">
+            <br><br>
+            <form action="uploadfile" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                <input type="file" id="file" name="myfile" accept="image/*">
+                <div class="d-none" id='actionbutton'>
+                    <input type="submit" class="btn btn-success"  value="Save">
+                    <a href="/users/profile" id="cancel" class="btn btn-warning">Cancel</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div class="col-sm-9">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                    aria-selected="true">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                    aria-controls="profile" aria-selected="false">Order</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                    aria-controls="contact" aria-selected="false">Contact</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="row" id="rowHome">
+
+                    <div class="col-6 col-sm-3">
+                        <p class="font-weight-bold">User Name </p>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <p class="font-weight-normal">{{user.userName}}</p>
+                    </div>
+
+                    <div class="w-100"></div>
+                    <div class="col-6 col-sm-3">
+                        <p class="font-weight-bold">Email</p>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <p class="font-weight-normal">{{user.email}}</p>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col-6 col-sm-3">
+                        <p class="font-weight-bold">Address</p>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <p class="font-weight-normal">{{user.address}}</p>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col-6 col-sm-3">
+                        <p class="font-weight-bold">Contact </p>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                        <p class="font-weight-normal">{{user.contact}}</p>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-success offset-2" id="updatedata">Edit</button>
+                </div>
+                <form id="formUpdate" class="d-none mt-2" method="post" action="updateuser">
+                    {{#each massagesError}}
+                    <div class="alert alert-danger">
+                        {{this}}
+                    </div>
+                    {{/each}}
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                    <div class="form-group">
+                        <label for="username">User Name</label>
+                        <input type="text" name="username" value="{{user.userName}}" class="form-control"
+                            placeholder="user name ..">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" value="{{user.email}}" name="email" class="form-control"
+                            placeholder="email..">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" name="address" value="{{user.address}}" class="form-control"
+                            placeholder="Address ..">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">Contact</label>
+                        <input type="text" name="contact" value="{{user.contact}}" class="form-control"
+                            placeholder="Contact ..">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Password..">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmpassword">Confirm Password</label>
+                        <input type="password" name="confirm-password" class="form-control"
+                            placeholder="Re enter Password..">
+                    </div>
+                    <div class="class-center py-4">
+                        <button type="submit" name="submit" class="btn btn-success offset-4">Update</button>
+                        <a href="/users/profile" class="btn btn-danger">Cancel</a>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                {{#each userOrder as |val index|}}
+                <table class="table ">
+                    <thead>
+
+                        <tr class="table-active">
+                            <th colspan="4" class="text-center ">Order Number {{add @index}}</th>
+                        </tr>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col" class="text-center">Product Name</th>
+                            <th scope="col" class="text-center">Product Quantity</th>
+                            <th scope="col" class="text-center">Product Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each this.cart.selectedProduct as |val indexProduct|}}
+                        <tr class="">
+                            <th>{{add @indexProduct}}</th>
+                            <td class="text-center">{{this.name}}</td>
+                            <td class="text-center">{{this.quantity}}</td>
+                            <td class="text-center">${{this.price}}</td>
+
+                        </tr>
+                        {{/each}}
+                        <tr class="table-primary">
+                            <th colspan="3">Total</th>
+                            <th class="text-center ">${{this.orderPrice}}</th>
+                        </tr>
+                    </tbody>
+                </table>
+                {{/each}}</div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    console.log(document.getElementById('hasError').value);
+    if (document.getElementById('hasError').value === "true") {
+        $('#rowHome').addClass('d-none');
+        $('#formUpdate').removeClass('d-none');
+    }
+    document.getElementById('file').onchange = function () {
+        const reader = new FileReader();
+        reader.onload = function () {
+            document.getElementById('image').src = this.result;
+        }
+        reader.readAsDataURL(this.files[0]);
+        $('#file').addClass('d-none');
+        $('#actionbutton').removeClass('d-none');
+    }
+
+    document.getElementById('updatedata').onclick = function () {
+        $('#rowHome').addClass('d-none');
+        $('#formUpdate').removeClass('d-none');
+    }
+</script>

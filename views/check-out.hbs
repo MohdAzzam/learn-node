@@ -1,0 +1,65 @@
+<div class="col-md-4 offset-md-4 bg-light ">
+    {{#if errorMassage}}
+    <div class="alert alert-danger">
+        {{errorMassage}}
+    </div>
+    {{/if}}
+    <div id="payment-errors" class="d-none alert alert-danger">
+    </div>
+    <form action="/checkout" method="post" id="checkout-form">
+        <div class="form-group pt-4">
+            <label for="name">Name</label>
+            <input type="text" id="" value="{{user.userName}}" name="name" placeholder="please enter your name" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="Address">Address</label>
+            <input class="form-control" type="text" value="{{user.address}}" id="" name="address" placeholder="please enter your address">
+        </div>
+        <div class="form-group">
+            <label for="Address">Contact</label>
+            <input class="form-control" type="text" value="{{user.contact}}" id="" name="contact" placeholder="please enter your contact">
+        </div>
+        <div class="form-group">
+            <label for="creditcardname">Credit Card Name</label>
+            <input class="form-control" type="text" id="" name="creditcardname"
+                placeholder="please enter creadit card name">
+        </div>
+        <div class="form-group">
+            <label for="creditcardnumber">Credit Card Number</label>
+            <input class="form-control" type="number" id="card-number" name="creditcardnumber"
+                placeholder="please enter your address">
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="expmonth">Exp Month</label>
+                    <input class="form-control" type="number" id="card-expiry-month" name="expmonth"
+                        placeholder="Exp Month">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="exp year">Exp Year</label>
+                    <input class="form-control" type="number" id="card-expiry-year" name="expyear"
+                        placeholder="Exp Year">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="CVC">CVC</label>
+                    <input class="form-control" type="number" id="card-cvc" name="cvc" placeholder="CVS">
+                </div>
+            </div>
+        </div>
+        <div class="pt-2">
+            <button type="submit" class="px-4  btn btn-success">Confirm Check Out</button>
+            <span class="alert alert-success ">Price : ${{totalPrice}}</span>
+
+        </div>
+
+    </form>
+</div>
+
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript" src="/javascripts/checkout.js"></script>

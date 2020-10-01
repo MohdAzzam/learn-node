@@ -1,0 +1,56 @@
+{{#if userCart}}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col" class="text-center">Name</th>
+            <th scope="col" class="text-center">Quantity</th>
+            <th scope="col" class="text-center">Price</th>
+            <th scope="col" class="text-center">Delete Proudct</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each userCart.selectedProduct as |val index|}}
+        <tr>
+            <th>{{add @index}}</th>
+            <td class="text-center">{{val.name}}</td>
+            <td class="text-center">
+                {{#if (quantityChecker @val.quantity) }}
+                <a href="#" class="btn disabled mr-2"><i class="fas fa-minus-square"></i></a>
+                {{else}}
+                <a href="/decreaseProduct/{{index}}" class="btn mr-2"><i class="fas fa-minus-square"></i></a>
+                {{/if}}
+                {{val.quantity}}
+                <a href="/increaseProduct/{{index}}" class="btn ml-2"><i class="fas fa-plus-square"></i></a>
+            </td>
+            <td class="text-center">${{val.price}}</td>
+            <td class="text-center"><a href="/deleteProduct/{{index}}" class="btn btn-danger">Delete <i
+                        class="fas fa-trash"></i></a></td>
+        </tr>
+        {{/each}}
+        <tr class="table-primary">
+            <th colspan="2">Total</th>
+            <th class="text-center ">{{userCart.totalQuantity}}</th>
+            <th class="text-center ">${{userCart.totalPrice}}</th>
+        </tr>
+    </tbody>
+</table>
+<div class="text-center pt-2">
+    <a href="/check-out" class="btn btn-success ml-4 btn-lg">Proceed to check-out</a>
+</div>
+{{else}}
+{{#if hasCart}}
+<h4 class="alert alert-danger text-center ">Sorry your shopping cart is expierd </h4>
+<div class="text-center pt-4">
+    <a href="/" class="btn btn-primary btn-lg">Back To Shopping</a>
+</div>
+
+{{else}}
+
+<h4 class="alert alert-danger text-center ">You Haven't Chose Any Thing Yet !! </h4>
+<div class="text-center pt-4">
+    <a href="/" class="btn btn-primary btn-lg">Back To Shopping</a>
+</div>
+{{/if}}
+{{/if}}

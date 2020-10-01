@@ -1,0 +1,26 @@
+<div class="col-md-4 offset-md-4">
+    <h5 class="text-center">SignUp</h5>
+    <form action="signup" method="post">
+        <input type="hidden"  name="_csrf" value="{{csrfToken}}">
+
+    {{#each massages}}
+        <div class="alert alert-danger">
+            {{this}}
+        </div>
+    {{/each}}
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" placeholder="Email here ..." class="form-control">
+        </div> 
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" placeholder="Password here ..." class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" name="confirm-password" placeholder="Re enter Password here ..."
+                class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary offset-md-4">Sign Up </button>
+    </form>
+</div>
